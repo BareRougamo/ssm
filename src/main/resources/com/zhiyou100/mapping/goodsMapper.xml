@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace的值是dao层接口的全路径 -->
+<mapper namespace="com.zhiyou100.dao.IGoodsDao">
+	<!-- 配置实体类与数据表映射关系 
+		type：实体类全路径
+		id：名字
+	-->
+	<resultMap type="com.zhiyou100.entity.Goods" id="goodsMap">
+		<!--
+			id标签：配置唯一字段，一般是主键
+				property：与实体类属性名一致
+				column：与数据表字段名一致
+		  -->
+		<id property="goods_id" column="goods_id"/>
+		<!-- result标签配置非唯一字段 -->
+		<result property="goods_name" column="goods_name"/>
+		<result property="goods_type" column="goods_type"/>
+		<result property="goods_price" column="goods_price"/>
+		<result property="goods_count" column="goods_count"/>
+	</resultMap>
+	<!-- 定义表中字段 -->
+	<sql id="key">GOODS_ID,GOODS_NAME,GOODS_TYPE,GOODS_PRICE,GOODS_COUNT</sql>
+	<!-- 查询语句，查询所有 
+	resultMap：与上边的resultMap标签的id属性值一致，将查出的数据按照配置的对应关系，封装到实体类中
+	-->
+	<select id="queryAll" resultMap="goodsMap">
+		SELECT <include refid="key"/> FROM GOODS
+	</select>
+</mapper>
